@@ -5,7 +5,7 @@ MODEL_ID = "Salesforce/blip-image-captioning-large"
 
 @bentoml.service(
     resources={
-        "memory" : "2Gi"
+        "memory" : "4Gi"
     }
 )
 class BlipImageCaptioning:    
