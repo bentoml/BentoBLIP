@@ -1,0 +1,4 @@
+torch
+transformers
+Pillow
+bentoml>=1.2.0a0
