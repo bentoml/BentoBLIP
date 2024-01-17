@@ -1,20 +1,21 @@
 import bentoml
 from PIL.Image import Image
 
+MODEL_ID = "Salesforce/blip-image-captioning-large"
+
 @bentoml.service(
     resources={
         "memory" : "2Gi"
     }
 )
 class BlipImageCaptioning:    
-    model_ref = bentoml.models.get("blip-image-captioning")
     
     def __init__(self) -> None:
         import torch
         from transformers import BlipProcessor, BlipForConditionalGeneration
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
-        self.model = BlipForConditionalGeneration.from_pretrained(self.model_ref.path).to(self.device)
-        self.processor = BlipProcessor.from_pretrained(self.model_ref.path)
+        self.model = BlipForConditionalGeneration.from_pretrained(MODEL_ID).to(self.device)
+        self.processor = BlipProcessor.from_pretrained(MODEL_ID)
         print("Model blip loaded", "device:", self.device)
     
     @bentoml.api
