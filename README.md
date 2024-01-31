@@ -11,6 +11,8 @@ This project demonstrates how to build an image captioning application on top of
 ## Install dependencies
 
 ```bash
+git clone https://github.com/bentoml/BentoBlip.git
+cd BentoBlip
 pip install -r requirements.txt
 ```
 
