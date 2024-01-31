@@ -1,3 +1,7 @@
+from __future__ import annotations
+
+import typing as t
+
 import bentoml
 from PIL.Image import Image
 
@@ -19,7 +23,7 @@ class BlipImageCaptioning:
         print("Model blip loaded", "device:", self.device)
     
     @bentoml.api
-    async def generate(self, img: Image, txt: str| None = None) -> str:
+    async def generate(self, img: Image, txt: t.Optional[str] = None) -> str:
         if txt:
             inputs = self.processor(img, txt, return_tensors="pt").to(self.device)
         else:
