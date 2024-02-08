@@ -31,6 +31,3 @@ class BlipImageCaptioning:
 
         out = self.model.generate(**inputs, max_new_tokens=100, min_new_tokens=20)
         return self.processor.decode(out[0], skip_special_tokens=True)
-
-if __name__ == "__main__":
-    BlipImageCaptioning.serve_http()
