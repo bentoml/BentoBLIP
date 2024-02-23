@@ -1,6 +1,15 @@
+<div align="center">
+    <h1 align="center">BentoBlip</h1>
+    <br>
+    <strong>Intelligently link images and words together<br></strong>
+    <i>Powered by BentoML 🍱</i>
+    <br>
+</div>
+<br>
+
 BLIP (Bootstrapping Language Image Pre-training) is a technique to improve the way AI models understand and process the relationship between images and textual descriptions.
 
-This project demonstrates how to build an image captioning application on top of a BLIP model with BentoML.
+This project demonstrates how to build an image captioning application on top of a [BLIP model](https://huggingface.co/Salesforce/blip-image-captioning-large) with BentoML.
 
 ## Prerequisites
 
@@ -39,7 +48,7 @@ curl -s -X POST \
     http://localhost:3000/generate
 ```
 
-BentoML client
+Python client
 
 ```python
 import bentoml
@@ -58,11 +67,11 @@ Expected output:
 unicorn at sunset by a pond with a beautiful landscape in the background, with a reflection of the sun in the water
 ```
 
-## Deploy to production
+## Deploy to BentoCloud
 
-After the Service is ready, you can deploy the application to BentoCloud for better management and scalability. A configuration YAML file (`bentofile.yaml`) is used to define the build options for your application. See [Bento build options](https://docs.bentoml.com/en/latest/concepts/bento.html#bento-build-options) to learn more.
+After the Service is ready, you can deploy the application to BentoCloud for better management and scalability. [Sign up](https://www.bentoml.com/) if you haven't got a BentoCloud account.
 
-Make sure you have [logged in to BentoCloud](https://docs.bentoml.com/en/1.2/bentocloud/how-tos/manage-access-token.html), then run the following command in your project directory to deploy the application to BentoCloud.
+Make sure you have [logged in to BentoCloud](https://docs.bentoml.com/en/latest/bentocloud/how-tos/manage-access-token.html), then run the following command to deploy it.
 
 ```bash
 bentoml deploy .
@@ -70,4 +79,4 @@ bentoml deploy .
 
 Once the application is up and running on BentoCloud, you can access it via the exposed URL.
 
-**Note**: Alternatively, you can use BentoML to generate a [Docker image](https://docs.bentoml.com/en/1.2/guides/containerization.html) for a custom deployment.
+**Note**: For custom deployment in your own infrastructure, use [BentoML to generate an OCI-compliant image](https://docs.bentoml.com/en/latest/guides/containerization.html).
