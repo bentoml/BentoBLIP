@@ -4,7 +4,7 @@
 
 [BLIP (Bootstrapping Language Image Pre-training)](https://arxiv.org/abs/2201.12086) is a technique to improve the way AI models understand and process the relationship between images and textual descriptions.
 
-This is a BentoML example project, demonstrating how to build an image captioning inference API server, using the [BLIP model](https://huggingface.co/Salesforce/blip-image-captioning-large). See [here](https://github.com/bentoml/BentoML?tab=readme-ov-file#%EF%B8%8F-what-you-can-build-with-bentoml) for a full list of BentoML example projects.
+This is a BentoML example project, demonstrating how to build an image captioning inference API server, using the [BLIP model](https://huggingface.co/Salesforce/blip-image-captioning-large). See [here](https://github.com/bentoml/BentoML/tree/main/examples) for a full list of BentoML example projects.
 
 ## Prerequisites
 
