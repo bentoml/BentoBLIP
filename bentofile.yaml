@@ -7,3 +7,5 @@ include:
 - "demo.jpg"
 python:
   requirements_txt: "./requirements.txt"
+docker:
+  python_version: 3.11
