@@ -1,0 +1,9 @@
+service: "service:BlipImageCaptioning"
+labels:
+  owner: bentoml-team
+  project: gallery
+include:
+- "*.py"
+- "demo.jpg"
+python:
+  requirements_txt: "./requirements.txt"
