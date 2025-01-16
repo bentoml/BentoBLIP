@@ -10,14 +10,16 @@ logger = logging.getLogger(__name__)
 
 MODEL_ID = "Salesforce/blip2-opt-2.7b"
 
+
 @bentoml.service(
     resources={
-        "gpu": 1
+        "gpu": 1,
+        "gpu_type": "nvidia-tesla-a100",
     }
 )
-class BlipImageCaptioning:    
+class BlipImageCaptioning:
     hf_model = bentoml.models.HuggingFaceModel(MODEL_ID)
-    
+
     def __init__(self) -> None:
         import torch
         from transformers import Blip2Processor, Blip2ForConditionalGeneration
@@ -36,15 +38,18 @@ class BlipImageCaptioning:
         ).to(self.device)
 
         logger.info(f"Model '{MODEL_ID}' loaded on device: f{self.device}")
-    
 
     @bentoml.api
     async def generate(self, img: Image, question: t.Optional[str] = None) -> str:
-        img = img.convert('RGB')
+        img = img.convert("RGB")
         if question:
-            inputs = self.processor(img, question, return_tensors="pt").to(self.device, self.dtype)
+            inputs = self.processor(img, question, return_tensors="pt").to(
+                self.device, self.dtype
+            )
         else:
-            inputs = self.processor(img, return_tensors="pt").to(self.device, self.dtype)
+            inputs = self.processor(img, return_tensors="pt").to(
+                self.device, self.dtype
+            )
 
         print("inputs:", inputs)
         out = self.model.generate(**inputs, max_new_tokens=100)
