@@ -10,11 +10,14 @@ logger = logging.getLogger(__name__)
 
 MODEL_ID = "Salesforce/blip2-opt-2.7b"
 
+runtime_image = bentoml.images.PythonImage(python_version="3.11")\
+                            .requirements_file("requirements.txt")
 
 @bentoml.service(
+    image=runtime_image,
     resources={
         "gpu": 1,
-        "gpu_type": "nvidia-tesla-a100",
+        "gpu_type": "nvidia-tesla-t4",
     }
 )
 class BlipImageCaptioning:
@@ -40,10 +43,10 @@ class BlipImageCaptioning:
         logger.info(f"Model '{MODEL_ID}' loaded on device: f{self.device}")
 
     @bentoml.api
-    async def generate(self, img: Image, question: t.Optional[str] = None) -> str:
+    async def generate(self, img: Image, txt: t.Optional[str] = None) -> str:
         img = img.convert("RGB")
-        if question:
-            inputs = self.processor(img, question, return_tensors="pt").to(
+        if txt:
+            inputs = self.processor(img, txt, return_tensors="pt").to(
                 self.device, self.dtype
             )
         else:

@@ -5,14 +5,20 @@ import typing as t
 import bentoml
 from PIL.Image import Image
 
+MODEL_ID = "Salesforce/blip-image-captioning-large"
+
+runtime_image = bentoml.images.PythonImage(python_version="3.11")\
+                            .requirements_file("requirements.txt")
 
 @bentoml.service(
+    image=runtime_image,
     resources={
         "gpu": 1,
+        "gpu_type": "nvidia-tesla-t4",
     }
 )
 class BlipImageCaptioning:
-    hf_model = bentoml.models.HuggingFaceModel("Salesforce/blip-image-captioning-large")
+    hf_model = bentoml.models.HuggingFaceModel(MODEL_ID)
 
     def __init__(self) -> None:
         import torch
@@ -32,17 +38,17 @@ class BlipImageCaptioning:
         self.processor = BlipProcessor.from_pretrained(self.hf_model)
         print("Model blip loaded", "device:", self.device)
 
-    @bentoml.api(batchable=True)
-    async def generate(self, image: Image, text: t.Optional[str] = None) -> str:
-        image = image.convert("RGB")
-        if text:
+    @bentoml.api
+    async def generate(self, img: Image, txt: t.Optional[str] = None) -> str:
+        img = img.convert("RGB")
+        if txt:
             # conditional image captioning
-            inputs = self.processor(image, text, return_tensors="pt").to(
+            inputs = self.processor(img, txt, return_tensors="pt").to(
                 self.device, self.dtype
             )
         else:
             # unconditional image captioning
-            inputs = self.processor(image, return_tensors="pt").to(
+            inputs = self.processor(img, return_tensors="pt").to(
                 self.device, self.dtype
             )
 
